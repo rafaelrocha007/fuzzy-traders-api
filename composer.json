@@ -1,0 +1,22 @@
+{
+  "name": "rafaelrocha007/fuzzy-trader-backend",
+  "description": "Fuzzy Trader Challenge",
+  "type": "project",
+  "require": {
+    "vlucas/phpdotenv": "^2.4",
+    "ext-PDO": "^7.3"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Rafael Rocha",
+      "email": "rafael.rocha.mg@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/App"
+    }
+  }
+}
