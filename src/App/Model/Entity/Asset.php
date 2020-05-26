@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 
 class Asset
 {
-    private $id;
-    private $name;
-    private $type;
+    public $id;
+    public $name;
+    public $type;
 
     const TYPE_CRYPTOCURRENCY = 'crypto';
     const TYPE_STOCK = 'stock';

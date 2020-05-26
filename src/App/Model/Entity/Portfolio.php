@@ -4,12 +4,12 @@ namespace App\Model\Entity;
 
 class Portfolio
 {
-    private $id;
-    private $userId;
-    private $assetId;
-    private $amount;
-    private $originalPrice;
-    private $operationDate;
+    public $id;
+    public $userId;
+    public $assetId;
+    public $amount;
+    public $originalPrice;
+    public $operationDate;
 
     /**
      * @return mixed

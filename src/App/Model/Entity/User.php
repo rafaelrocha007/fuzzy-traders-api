@@ -4,17 +4,19 @@ namespace App\Model\Entity;
 
 class User
 {
-    private $id;
-    private $name;
-    private $cpf;
+    public $id;
+    public $name;
+    public $cpf;
 
-    public static function fromDbData(array $data){
+    public static function fromDbData(Array $data)
+    {
         $user = new User();
         $user->setId($data['id']);
         $user->setName($data['name']);
         $user->setCpf($data['cpf']);
         return $user;
     }
+
     /**
      * @return mixed
      */

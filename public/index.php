@@ -35,8 +35,11 @@ if (isset($uri[2])) {
 $method = $_SERVER["REQUEST_METHOD"];
 
 $controller = '\\App\\Controller\\' . ucfirst($uri[1]) . 'Controller';
+if (!class_exists($controller))
+    $controller = '\\App\\Controller\\Controller';
 
-$controller = new $controller($conn, $method, $resourceId);
+$gateway = '\\App\\Model\\TableGateway\\' . ucfirst($uri[1]) . 'Gateway';
+$controller = new $controller($method, $resourceId, new $gateway($conn));
 $controller->processRequest();
 
 
