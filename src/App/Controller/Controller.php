@@ -4,9 +4,9 @@ namespace App\Controller;
 
 class Controller
 {
-    private $method;
-    private $resourceId;
-    private $gateway;
+    protected $method;
+    protected $resourceId;
+    protected $gateway;
 
     public function __construct($method, $resourceId, $gateway)
     {
@@ -39,11 +39,8 @@ class Controller
                 break;
         }
 
-
         header($response['status_code_header']);
-        if ($response['body']) {
-            echo $response['body'];
-        }
+        if ($response['body']) echo $response['body'];
     }
 
     private function getAll()
@@ -69,10 +66,7 @@ class Controller
     private function create()
     {
         $input = (array)json_decode(file_get_contents('php://input'), TRUE);
-        if (!$this->validatePerson($input)) {
-            return $this->unprocessableEntityResponse();
-        }
-        $this->gateway->insert($input);
+        $this->gateway->create($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = null;
         return $response;
@@ -85,9 +79,6 @@ class Controller
             return $this->notFoundResponse();
         }
         $input = (array)json_decode(file_get_contents('php://input'), TRUE);
-        if (!$this->validatePerson($input)) {
-            return $this->unprocessableEntityResponse();
-        }
         $this->gateway->update($id, $input);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = null;
@@ -106,17 +97,6 @@ class Controller
         return $response;
     }
 
-    private function validatePerson($input)
-    {
-        if (!isset($input['firstname'])) {
-            return false;
-        }
-        if (!isset($input['lastname'])) {
-            return false;
-        }
-        return true;
-    }
-
     private function unprocessableEntityResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
@@ -126,7 +106,7 @@ class Controller
         return $response;
     }
 
-    private function notFoundResponse()
+    protected function notFoundResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = null;
