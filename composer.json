@@ -4,7 +4,8 @@
   "type": "project",
   "require": {
     "vlucas/phpdotenv": "^2.4",
-    "ext-PDO": "^7.3"
+    "ext-PDO": "^7.3",
+    "ext-json": "^1.7"
   },
   "license": "MIT",
   "authors": [
