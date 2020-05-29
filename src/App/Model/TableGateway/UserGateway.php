@@ -23,7 +23,7 @@ class UserGateway
 
             $users = [];
             foreach ($result as $row) {
-                $users[] = User::fromDbData($row);
+                $users[] = User::fromArray($row);
             }
             return $users;
         } catch (\PDOException $e) {
@@ -41,7 +41,7 @@ class UserGateway
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             if (count($result))
-                return User::fromDbData($result[0]);
+                return User::fromArray($result[0]);
 
             return null;
         } catch (\PDOException $e) {
@@ -49,12 +49,34 @@ class UserGateway
         }
     }
 
-    function create(User $user)
+    function findByCpf($cpf)
     {
+        $statement = "SELECT id, name, cpf FROM user WHERE cpf = ?;";
+
+        try {
+            $statement = $this->conn->prepare($statement);
+            $statement->execute([$cpf]);
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            if (count($result))
+                return User::fromArray($result[0]);
+
+            return null;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    function create($user)
+    {
+        if(is_array($user)){
+            $user = User::fromArray($user);
+        }
+
         $statement = "INSERT INTO user(name, cpf) VALUES (:name, :cpf);";
 
         try {
-            $statement = $this->db->prepare($statement);
+            $statement = $this->conn->prepare($statement);
             $statement->execute([
                 'name' => $user->getName(),
                 'cpf' => $user->getCpf()
@@ -65,8 +87,12 @@ class UserGateway
         }
     }
 
-    function update(User $user)
+    function update($user)
     {
+        if(is_array($user)){
+            $user = User::fromArray($user);
+        }
+
         $statement = "UPDATE user SET name = :name, cpf = :cpf WHERE id = :id;";
 
         try {
@@ -93,5 +119,10 @@ class UserGateway
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
+    }
+
+    public function getEntityClass()
+    {
+        return User::class;
     }
 }

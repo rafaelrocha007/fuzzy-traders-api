@@ -8,10 +8,10 @@ class User
     public $name;
     public $cpf;
 
-    public static function fromDbData(Array $data)
+    public static function fromArray(Array $data)
     {
         $user = new User();
-        $user->setId($data['id']);
+        $user->setId(isset($data['id']) ? $data['id'] : null);
         $user->setName($data['name']);
         $user->setCpf($data['cpf']);
         return $user;

@@ -22,7 +22,7 @@ class AssetGateway
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             if (count($result))
-                return asset::fromDbData($result[0]);
+                return asset::fromArray($result[0]);
 
             return null;
         } catch (\PDOException $e) {
@@ -41,7 +41,7 @@ class AssetGateway
 
             $assets = [];
             foreach ($result as $row) {
-                $assets[] = asset::fromDbData($row);
+                $assets[] = asset::fromArray($row);
             }
             return $assets;
         } catch (\PDOException $e) {
@@ -54,7 +54,7 @@ class AssetGateway
         $statement = "INSERT INTO asset(name, type) VALUES (:name, :type);";
 
         try {
-            $statement = $this->db->prepare($statement);
+            $statement = $this->conn->prepare($statement);
             $statement->execute([
                 'name' => $asset->getName(),
                 'type' => $asset->gettype()
@@ -93,5 +93,10 @@ class AssetGateway
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
+    }
+
+    public function getEntityClass()
+    {
+        return Asset::class;
     }
 }

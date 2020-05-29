@@ -11,7 +11,7 @@ class Asset
     const TYPE_CRYPTOCURRENCY = 'crypto';
     const TYPE_STOCK = 'stock';
 
-    public static function fromDbData(array $data)
+    public static function fromArray(array $data)
     {
         $asset = new Asset();
         $asset->setId($data['id']);
