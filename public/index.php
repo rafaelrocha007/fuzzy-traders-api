@@ -5,10 +5,10 @@ ini_set('display_errors', 1);
 require_once "../vendor/autoload.php";
 
 use App\Database\Connector;
-use Dotenv\DotEnv;
+use Dotenv\Dotenv;
 
 if(!getenv('DB_HOST')) {
-    $dotenv = new DotEnv(__DIR__ . '/../');
+    $dotenv = new Dotenv(__DIR__ . '/../');
     $dotenv->load();
 }
 
