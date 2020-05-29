@@ -7,8 +7,10 @@ require_once "../vendor/autoload.php";
 use App\Database\Connector;
 use Dotenv\DotEnv;
 
-$dotenv = new DotEnv(__DIR__ . '/../');
-$dotenv->load();
+if(!getenv('DB_HOST')) {
+    $dotenv = new DotEnv(__DIR__ . '/../');
+    $dotenv->load();
+}
 
 $conn = (new Connector())->getConnection();
 
