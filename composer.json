@@ -7,6 +7,9 @@
     "ext-PDO": "^7.3",
     "ext-json": "^1.7"
   },
+  "require-dev": {
+    "heroku/heroku-buildpack-php": "*"
+  },
   "license": "MIT",
   "authors": [
     {
