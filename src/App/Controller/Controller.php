@@ -34,6 +34,9 @@ class Controller
             case 'DELETE':
                 $response = $this->delete($this->resourceId);
                 break;
+            case 'OPTIONS':
+                $response = $this->options();
+                break;
             default:
                 $response = $this->notFoundResponse();
                 break;
@@ -110,6 +113,13 @@ class Controller
     {
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = null;
+        return $response;
+    }
+
+    private function options()
+    {
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = '';
         return $response;
     }
 }
