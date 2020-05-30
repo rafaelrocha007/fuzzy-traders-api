@@ -7,18 +7,24 @@ require_once "../vendor/autoload.php";
 use App\Database\Connector;
 use Dotenv\Dotenv;
 
-if(!getenv('DB_HOST')) {
+if (!getenv('DB_HOST')) {
     $dotenv = new Dotenv(__DIR__ . '/../');
     $dotenv->load();
 }
 
 $conn = (new Connector())->getConnection();
 
-header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Origin: *');
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
+header("Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+//CORS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS' && isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    exit(0);
+}
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
