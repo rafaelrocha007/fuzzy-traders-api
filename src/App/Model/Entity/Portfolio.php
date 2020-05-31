@@ -8,8 +8,20 @@ class Portfolio
     public $userId;
     public $assetId;
     public $amount;
-    public $originalPrice;
-    public $operationDate;
+
+    public static function fromArray(Array $data)
+    {
+        $portfolio = new Portfolio();
+        $portfolio->setId(isset($data['id']) ? $data['id'] : null);
+        $portfolio->setUserId($data['userId']);
+        $portfolio->setAssetId($data['assetId']);
+        $portfolio->setAmount($data['amount']);
+
+        //data from asset included for getAll
+        $portfolio->name = $data['name'] ?? null;
+        $portfolio->type = $data['type'] ?? null;
+        return $portfolio;
+    }
 
     /**
      * @return mixed
@@ -73,37 +85,5 @@ class Portfolio
     public function setAmount($amount)
     {
         $this->amount = $amount;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOriginalPrice()
-    {
-        return $this->originalPrice;
-    }
-
-    /**
-     * @param mixed $originalPrice
-     */
-    public function setOriginalPrice($originalPrice)
-    {
-        $this->originalPrice = $originalPrice;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOperationDate()
-    {
-        return $this->operationDate;
-    }
-
-    /**
-     * @param mixed $operationDate
-     */
-    public function setOperationDate($operationDate)
-    {
-        $this->operationDate = $operationDate;
     }
 }

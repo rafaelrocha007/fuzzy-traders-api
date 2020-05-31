@@ -23,7 +23,7 @@ class SessionGateway
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             if (count($result))
-                return User::fromDbData($result[0]);
+                return User::fromArray($result[0]);
 
             return null;
         } catch (\PDOException $e) {

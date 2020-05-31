@@ -22,7 +22,7 @@ class Controller
                 if ($this->resourceId) {
                     $response = $this->get($this->resourceId);
                 } else {
-                    $response = $this->getAll();
+                    $response = $this->getAll(isset($_GET['filter']) ? $_GET['filter'] : []);
                 }
                 break;
             case 'POST':
@@ -46,9 +46,9 @@ class Controller
         if ($response['body']) echo $response['body'];
     }
 
-    private function getAll()
+    private function getAll($filter)
     {
-        $result = $this->gateway->findAll();
+        $result = $this->gateway->findAll($filter);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
         return $response;

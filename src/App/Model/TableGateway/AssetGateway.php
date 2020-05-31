@@ -21,10 +21,11 @@ class AssetGateway
             $statement = $this->conn->query($statement);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-            if (count($result))
-                return asset::fromArray($result[0]);
-
-            return null;
+            $assets = [];
+            foreach ($result as $row) {
+                $assets[] = Asset::fromArray($row);
+            }
+            return $assets;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
@@ -39,11 +40,10 @@ class AssetGateway
             $statement->execute([$id]);
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-            $assets = [];
-            foreach ($result as $row) {
-                $assets[] = asset::fromArray($row);
-            }
-            return $assets;
+            if (count($result))
+                return Asset::fromArray($result[0]);
+
+            return null;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
